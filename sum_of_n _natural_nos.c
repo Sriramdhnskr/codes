@@ -1,12 +1,9 @@
 #include <stdio.h>
 int sum(int n)
 {
-    int sum = 0;
-    for(int i=1;i<=m;i++)
-    {
-        sum += i;
-    }
-    return sum;
+    if(n==0)
+        return 0;
+    return n + sum(n-1);
 }
 int main()
 {
