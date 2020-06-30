@@ -1,14 +1,14 @@
 #include <stdio.h>
 int main()
 {
-    int n;
+    int m;
     printf("\nEnter the number:");
-    scanf("%d",&n);
+    scanf("%d",&m);
     int sum = 0;
-    for(int i = 1; i <= n; i++)
+    for(int i=1;i<=m;i++)
     {
         sum += i;
     }
-    printf("\nsum of %d natural no.s: %d",n,sum);
+    printf("\nsum of %d natural no.s: %d",m,sum);
     return 0;
 }
