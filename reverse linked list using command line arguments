@@ -29,7 +29,7 @@ void create(char A[])
     last=t; 
     } 
 }
-void Reverse1(struct Node *p)
+/*void Reverse1(struct Node *p) //sliding pointers - tail to head 
 { 
 struct Node *q=NULL,*r=NULL;  
 while(p!=NULL)  
@@ -40,8 +40,8 @@ while(p!=NULL)
     q->next=r;  
     }  
     first=q; 
-} 
-void Reverse2(struct Node *q,struct Node *p)
+} */
+void Reverse2(struct Node *q,struct Node *p)//tail to head using recursion
 {  
 if(p)  
 {     
