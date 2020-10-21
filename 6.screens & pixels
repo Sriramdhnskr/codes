@@ -1,0 +1,56 @@
+#include<graphics.h>
+#include<iostream>
+#include <conio.h>
+#include<cmath>
+#include<iomanip>
+class Line
+{
+	int x1,y1,x2,y2;
+	public:
+		//Line(){};
+		Line(int a,int b,int c,int d){
+			x1=a;
+			y1=b;
+			x2=c;
+			y2=d;
+		}
+		void Display()
+		{
+			line(x1,x2,y1,y2);
+		}
+		void lengthfrompoints()
+		{
+			float k;
+			int l,m,n;
+			l=pow(x2-x1,2);
+			m=pow(y2-y1,2);
+			n=l+m;
+			k=sqrt(n);
+			std::cout<<"Distance"<<k;
+		}
+};
+class Circle
+{
+int x,y,radius;
+public:
+	Circle(int a,int b,int c){
+		//if(a<=800 && b<=800 && c<=800)
+			x=a;
+			y=b;
+			radius=c;
+		}
+		void Displaycir()
+		{
+			circle(x,y,radius);
+		}
+};
+int main()
+{
+    initwindow(800,800);
+    Line L(200,210,520,200);
+    L.Display();
+    L.lengthfrompoints();
+    Circle C(150,150,50);
+    C.Displaycir();
+    getch();
+}
