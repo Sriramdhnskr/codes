@@ -5,42 +5,38 @@
 #include<ctype.h>
 #include<stdlib.h>
 using namespace std;
-class aggregate
+class voice_Sensor
 {
-    public:
-    void sorting(double arr[][10],int i,int col)
-    {
-        cout<<"\n\t__________________________Sorting the Sensor values__________________________\t\n";
-        for(int j=0;j<col;j++)
+ private:
+    double db_comp,db_limit;
+public:
+    voice_Sensor(){db_limit=7.0;}
+    voice_Sensor(double x){db_limit=x;}
+    void voice_sensor_compute(double arr[][10],int i,int col){
+        cout<<"____Voice sensor data____\n";
+         for(int j=col-2;j<col;j++)
         {
-            for(int k=0;k<i-1;k++)
+            for(int k=0;k<i;k++)
             {
-                for(int p=0;p<i-k-1;p++)
-                {
-                if(arr[p][j]>arr[p+1][j])
-                {
-                swap(arr[p][j],arr[p+1][j]);
-                }
-                }
+            db_comp=arr[k][j];
+            if(db_comp>=db_limit)
+            {
+                cout<<"Door opens for"<<db_comp<<endl;
             }
-        }
+            else if(arr[j][k]<db_limit){
+                cout<<"No action ,safe"<<db_comp<<endl;
+            }
+            }
     }
-    void display(double arr[][10],int i,int col)
-    {
-        for(int j=0;j<i;j++)
-        {
-            for(int k=0;k<col;k++)
-            {
-                cout<<arr[j][k]<<"\t";
-            }
-        }
     }
 };
 class sensor{
 private:
     enum sen{Left_top,Right_top,Left_bottom,Right_bottom};
-    double weight_comp,limit=5.0;
+    double weight_comp,limit;
 public:
+    sensor(){limit=4.0;}
+    sensor(double x){limit=x;}
     void left_top_door_compute(double arr[][10],int i,int col){
         sen a=Left_top;
         cout<<"______Left top sensor data______\n";
@@ -125,7 +121,60 @@ public:
             }
     }
     }
+    virtual void display();//polymorphic design
     };
+    void sensor::display(){}
+    class aggregate:public sensor
+{
+private:
+    int preset_val;
+    public:
+        aggregate(){preset_val=1.5;}
+        aggregate(int x)
+        {
+            preset_val=x;
+        }
+        void preset_scalar(double arr[][10],int i,int col)
+        {
+            cout<<"\n_______________preset value Scalar Matrix____________\n";
+          for(int l=0;l<i;l++){
+        for(int m=0;m<col;m++){
+        cout<<preset_val*arr[l][m]<<"\t";
+        }
+   cout<<"\n";
+     }
+        }
+    void sorting(double arr[][10],int i,int col)
+    {
+        cout<<"\n\t__________________________Sorting the Sensor values__________________________\t\n";
+        for(int j=0;j<col;j++)
+        {
+            for(int k=0;k<i-1;k++)
+            {
+                for(int p=0;p<i-k-1;p++)
+                {
+                if(arr[p][j]>arr[p+1][j])
+                {
+                //swap(&arr[p][j],&arr[p+1][j]);
+                double temp=arr[p][j];
+                arr[p][j]=arr[p+1][j];
+                arr[p+1][j]=temp;
+                }
+                }
+            }
+        }
+    }
+    void display(double arr[][10],int i,int col)
+    {
+        for(int j=0;j<i;j++)
+        {
+            for(int k=0;k<col;k++)
+            {
+                cout<<arr[j][k]<<"\t";
+            }
+        }
+    }
+};
 /*class sensor{
 private:
     double weight_comp,limit=5.0;
@@ -145,8 +194,9 @@ public:
     }
     }; */
 int main () {
-sensor ob;
-aggregate ob1;
+sensor ob(5.0);
+aggregate a(2);
+voice_Sensor ob2(6.0);
   string line;
   //float weight_comp,limit=5.2;
   int i=0,j=0,k=0,len,last=0;
@@ -187,18 +237,21 @@ aggregate ob1;
        }
     // i= number of rows
     // col = number of columns
+    col++;
    for(int l=0;l<i;l++){
         for(int m=0;m<col;m++){
         cout<<arr[l][m]<<"\t";
         }
    cout<<"\n";
      }
-  ob.left_top_door_compute(arr,i,col);
-  ob.Right_top_door_compute(arr,i,col);
-  ob.left_bottom_door_compute(arr,i,col);
-  ob.Right_bottom_door_compute(arr,i,col);
-  ob1.sorting(arr,i,col);
-  ob1.display(arr,i,col);
+  a.preset_scalar(arr,i,col);
+  a.left_top_door_compute(arr,i,col);
+  a.Right_top_door_compute(arr,i,col);
+  a.left_bottom_door_compute(arr,i,col);
+  a.Right_bottom_door_compute(arr,i,col);
+  ob2.voice_sensor_compute(arr,i,col);
+  //a.sorting(arr,i,col);
+  //a.display(arr,i,col);
   return 0;
 }
 
